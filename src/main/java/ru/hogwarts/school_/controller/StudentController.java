@@ -1,7 +1,6 @@
 package ru.hogwarts.school_.controller;
 
 import org.springframework.web.bind.annotation.*;
-import ru.hogwarts.school_.exception.StudentException;
 import ru.hogwarts.school_.model.Student;
 import ru.hogwarts.school_.service.StudentService;
 

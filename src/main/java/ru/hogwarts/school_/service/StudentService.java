@@ -1,6 +1,5 @@
 package ru.hogwarts.school_.service;
 
-import ru.hogwarts.school_.exception.StudentException;
 import ru.hogwarts.school_.model.Student;
 
 import java.util.List;

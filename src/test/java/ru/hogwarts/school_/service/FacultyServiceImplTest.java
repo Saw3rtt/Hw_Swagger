@@ -1,108 +1,134 @@
 package ru.hogwarts.school_.service;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import ru.hogwarts.school_.exception.FacultyException;
 import ru.hogwarts.school_.model.Faculty;
+import ru.hogwarts.school_.repository.FacultyRepository;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 class FacultyServiceImplTest {
-    FacultyServiceImpl underTest = new FacultyServiceImpl();
 
+    @InjectMocks
+    private FacultyServiceImpl facultyService;
+
+    @Mock
+    private FacultyRepository facultyRepository;
+
+    @BeforeEach
+    void setUp() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
-    void create_createFaculty_returnedFaculty() {
+    public void create_createFaculty_success() {
+        Faculty faculty = new Faculty(1L, "Gryffindor", "Red");
+        when(facultyRepository.findByNameAndColor("Gryffindor", "Red")).thenReturn(Optional.empty());
+        when(facultyRepository.save(faculty)).thenReturn(faculty);
+
+        Faculty createdFaculty = facultyService.create(faculty);
+
+        assertEquals("Gryffindor", createdFaculty.getName());
+        assertEquals("Red", createdFaculty.getColor());
+    }
+
+    @Test
+    void create_duplicateFaculty_throwsException() {
         Faculty faculty = new Faculty(null, "Slytherin", "Green");
-        Faculty result = underTest.create(faculty);
-        assertEquals(result, faculty);
-    }
 
 
-    @Test
-    void create_faculty_thrownException() {
-        Faculty faculty1 = new Faculty(1L, "Slytherin", "Green");
-        underTest.create(faculty1);
-        Faculty faculty2 = new Faculty(1L, "Slytherin", "Green");
-        FacultyException ex = assertThrows(FacultyException.class, () -> underTest.create(faculty2));
+        when(facultyRepository.findByNameAndColor("Slytherin", "Green")).thenReturn(Optional.of(faculty));
+
+        FacultyException ex = assertThrows(FacultyException.class, () -> facultyService.create(faculty));
+
         assertEquals("Такой факультет уже создан!", ex.getMessage());
+        verify(facultyRepository, never()).save(any(Faculty.class));
     }
 
     @Test
-    void read_existingFaculty_returnedFaculty() {
-        Faculty faculty = new Faculty(null, "Gryffindor", "Red");
-        underTest.create(faculty);
+    void read_ExistingFaculty_ReturnsFaculty() {
+        Faculty faculty = new Faculty(1L, "Gryffindor", "Red");
+        when(facultyRepository.findById(1L)).thenReturn(Optional.of(faculty));
 
-        Faculty result = underTest.read(faculty.getId());
-
-
-        assertEquals(faculty.getId(), result.getId());
+        Faculty result = facultyService.read(1L);
+        assertEquals(1L, result.getId());
         assertEquals("Gryffindor", result.getName());
         assertEquals("Red", result.getColor());
     }
 
     @Test
-    void read_nonExistingFaculty_thrownException() {
+    void read_NonExistingFaculty_ThrowsException() {
+        when(facultyRepository.findById(1L)).thenReturn(Optional.empty());
 
-        FacultyException ex = assertThrows(FacultyException.class, () -> underTest.read(1L));
+        FacultyException ex = assertThrows(FacultyException.class, () -> facultyService.read(1L));
+
         assertEquals("Факультет не найден", ex.getMessage());
     }
 
     @Test
-    void update_existingFaculty_updatedFaculty() {
+    void update_ExistingFaculty_UpdatedFaculty() {
+        Faculty faculty = new Faculty(1L, "Ravenclaw", "Blue");
+        when(facultyRepository.findById(1L)).thenReturn(Optional.of(faculty));
+        when(facultyRepository.save(faculty)).thenReturn(faculty);
 
-        Faculty faculty = new Faculty(null, "Ravenclaw", "Blue");
-        underTest.create(faculty);
+        faculty.setName("Puf");
+        faculty.setColor("Brown");
+        Faculty updatedFaculty = facultyService.update(faculty);
 
-
-        faculty.setName("NewName");
-        faculty.setColor("NewColor");
-        Faculty updatedFaculty = underTest.update(faculty);
-
-        assertEquals(faculty.getId(), updatedFaculty.getId());
-        assertEquals("NewName", updatedFaculty.getName());
-        assertEquals("NewColor", updatedFaculty.getColor());
+        assertEquals(1L, updatedFaculty.getId());
+        assertEquals("Puf", updatedFaculty.getName());
+        assertEquals("Brown", updatedFaculty.getColor());
     }
 
     @Test
-    void update_nonExistingFaculty_thrownException() {
-
+    void update_NonExistingFaculty_ThrowsException() {
         Faculty faculty = new Faculty(1L, "Hufflepuff", "Yellow");
-        FacultyException ex = assertThrows(FacultyException.class, () -> underTest.update(faculty));
+        when(facultyRepository.findById(1L)).thenReturn(Optional.empty());
+
+        FacultyException ex = assertThrows(FacultyException.class, () -> facultyService.update(faculty));
+
         assertEquals("Факультет не найден", ex.getMessage());
     }
 
     @Test
-    void delete_existingFaculty_deletedFaculty() {
-        Faculty faculty = new Faculty(null, "Hufflepuff", "Yellow");
-        underTest.create(faculty);
+    void delete_ExistingFaculty_DeletedFaculty() {
+        Faculty faculty = new Faculty(1L, "Hufflepuff", "Yellow");
+        when(facultyRepository.findById(1L)).thenReturn(Optional.of(faculty));
 
-        Faculty deletedFaculty = underTest.delete(faculty.getId());
-        assertEquals(faculty.getId(), deletedFaculty.getId());
+        Faculty deletedFaculty = facultyService.delete(1L);
+
+        assertEquals(1L, deletedFaculty.getId());
     }
 
     @Test
-    void readAll_existingColor_returnMatchingFaculties() {
-        underTest.create(new Faculty(null, "Gryffindor", "Red"));
-        underTest.create(new Faculty(null, "Ravenclaw", "Blue"));
-        underTest.create(new Faculty(null, "Hufflepuff", "Yellow"));
+    void readAll_ExistingColor_ReturnMatchingFaculties() {
+        List<Faculty> faculties = new ArrayList<>();
+        faculties.add(new Faculty(1L, "Gryffindor", "Red"));
+        faculties.add(new Faculty(2L, "Ravenclaw", "Blue"));
+        faculties.add(new Faculty(3L, "Hufflepuff", "Yellow"));
 
+        when(facultyRepository.findByColor("Red")).thenReturn(faculties);
 
-        List<Faculty> redFaculties = underTest.readAll("Red");
+        List<Faculty> redFaculties = facultyService.readAll("Red");
 
-        assertNotNull(redFaculties);
-        assertEquals(1, redFaculties.size());
+        assertEquals(3, redFaculties.size());
         assertEquals("Red", redFaculties.get(0).getColor());
     }
 
     @Test
-    void readAll_nonExistingColor_returnEmptyList() {
-        underTest.create(new Faculty(null, "Gryffindor", "Red"));
-        underTest.create(new Faculty(null, "Ravenclaw", "Blue"));
-        underTest.create(new Faculty(null, "Hufflepuff", "Yellow"));
+    void readAll_NonExistingColor_ReturnEmptyList() {
+        when(facultyRepository.findByColor("Green")).thenReturn(new ArrayList<>());
 
-        List<Faculty> greenFaculties = underTest.readAll("Green");
+        List<Faculty> greenFaculties = facultyService.readAll("Green");
 
         assertNotNull(greenFaculties);
         assertEquals(0, greenFaculties.size());

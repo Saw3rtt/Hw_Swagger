@@ -8,7 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 @Entity
 public class Faculty {
@@ -17,6 +16,7 @@ public class Faculty {
     private Long id;
     private String name;
     private String color;
+
     @OneToMany(mappedBy = "faculty")
     @JsonIgnore
     private List<Student> students;
@@ -49,8 +49,16 @@ public class Faculty {
 
     public String getColor() {
         return color;
+
     }
 
+    public void setStudents(List<Student> students) {
+        this.students = students;
+    }
+
+    public List<Student> getStudents() {
+        return students;
+    }
 
     public void setColor(String color) {
         this.color = color;

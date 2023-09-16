@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import ru.hogwarts.school_.exception.FacultyException;
 import ru.hogwarts.school_.model.Faculty;
+import ru.hogwarts.school_.model.Student;
 import ru.hogwarts.school_.repository.FacultyRepository;
 
 import java.util.ArrayList;
@@ -76,16 +77,16 @@ class FacultyServiceImplTest {
 
     @Test
     void update_ExistingFaculty_UpdatedFaculty() {
-        Faculty faculty = new Faculty(1L, "Ravenclaw", "Blue");
-        when(facultyRepository.findById(1L)).thenReturn(Optional.of(faculty));
+        Faculty faculty = new Faculty(1L, "Gryffindor", "red");
+        when(facultyRepository.findById(1l)).thenReturn(Optional.of(faculty));
         when(facultyRepository.save(faculty)).thenReturn(faculty);
 
-        faculty.setName("Puf");
+        faculty.setName("Hufflepuff");
         faculty.setColor("Brown");
         Faculty updatedFaculty = facultyService.update(faculty);
 
         assertEquals(1L, updatedFaculty.getId());
-        assertEquals("Puf", updatedFaculty.getName());
+        assertEquals("Hufflepuff", updatedFaculty.getName());
         assertEquals("Brown", updatedFaculty.getColor());
     }
 
@@ -133,4 +134,37 @@ class FacultyServiceImplTest {
         assertNotNull(greenFaculties);
         assertEquals(0, greenFaculties.size());
     }
+
+    @Test
+    public void testFindNameOrColorIgnoreCase() {
+        List<Faculty> faculties = new ArrayList<>();
+        faculties.add(new Faculty(1L, "Science", "Blue"));
+        faculties.add(new Faculty(2L, "Arts", "Red"));
+        when(facultyRepository.findByNameIgnoreCaseOrColorIgnoreCase("Science", "Blue")).thenReturn(faculties);
+
+        List<Faculty> result = facultyService.findNameOrColorIgnoreCase("Science", "Blue");
+
+        assertEquals(2, result.size());
+        assertEquals("Science", result.get(0).getName());
+        assertEquals("Blue", result.get(0).getColor());
+        assertEquals("Arts", result.get(1).getName());
+        assertEquals("Red", result.get(1).getColor());
+    }
+
+    @Test
+    public void testGetListStudentsByFaculty() {
+        List<Student> students = new ArrayList<>();
+        students.add(new Student(1L, "John", 20, null));
+        students.add(new Student(2L, "Alice", 22, null));
+        when(facultyRepository.getStudentsByFaculty(1L)).thenReturn(students);
+
+        List<Student> result = facultyService.getListStudentsByFaculty(1L);
+
+        assertEquals(2, result.size());
+        assertEquals("John", result.get(0).getName());
+        assertEquals(20, result.get(0).getAge());
+        assertEquals("Alice", result.get(1).getName());
+        assertEquals(22, result.get(1).getAge());
+    }
+
 }

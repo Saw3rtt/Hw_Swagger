@@ -6,6 +6,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import ru.hogwarts.school_.exception.StudentException;
+import ru.hogwarts.school_.model.Faculty;
 import ru.hogwarts.school_.model.Student;
 import ru.hogwarts.school_.repository.StudentRepository;
 
@@ -31,7 +32,7 @@ class StudentServiceImplTest {
 
     @Test
     void create_ValidStudent_CreatedStudent() {
-        Student student = new Student(null, "Harry Potter", 17);
+        Student student = new Student(null, "Harry Potter", 17, null);
         when(studentRepository.findByNameAndAge("Harry Potter", 17)).thenReturn(Optional.empty());
         when(studentRepository.save(student)).thenReturn(student);
 
@@ -43,7 +44,7 @@ class StudentServiceImplTest {
 
     @Test
     void create_DuplicateStudent_ThrowsException() {
-        Student student = new Student(null, "Harry Potter", 17);
+        Student student = new Student(null, "Harry Potter", 17, null);
         when(studentRepository.findByNameAndAge("Harry Potter", 17)).thenReturn(Optional.of(student));
 
         StudentException ex = assertThrows(StudentException.class, () -> studentService.create(student));
@@ -54,7 +55,7 @@ class StudentServiceImplTest {
 
     @Test
     void read_ExistingStudent_ReturnsStudent() {
-        Student student = new Student(1L, "Hermione Granger", 18);
+        Student student = new Student(1L, "Hermione Granger", 18, null);
         when(studentRepository.findById(1L)).thenReturn(Optional.of(student));
 
         Student result = studentService.read(1L);
@@ -74,8 +75,8 @@ class StudentServiceImplTest {
     }
 
     @Test
-    void testUpdate_ExistingStudent_UpdatedStudent() {
-        Student student = new Student(1L, "Ron Weasley", 18);
+    void update_ExistingStudent_UpdatedStudent() {
+        Student student = new Student(1L, "Ron Weasley", 18, null);
         when(studentRepository.findById(1L)).thenReturn(Optional.of(student));
         when(studentRepository.save(student)).thenReturn(student);
 
@@ -90,7 +91,7 @@ class StudentServiceImplTest {
 
     @Test
     void update_NonExistingStudent_ThrowsException() {
-        Student student = new Student(1L, "Neville Longbottom", 17);
+        Student student = new Student(1L, "Neville Longbottom", 17, null);
         when(studentRepository.findById(1L)).thenReturn(Optional.empty());
 
         StudentException ex = assertThrows(StudentException.class, () -> studentService.update(student));
@@ -100,7 +101,7 @@ class StudentServiceImplTest {
 
     @Test
     void delete_ExistingStudent_DeletedStudent() {
-        Student student = new Student(1L, "Luna Lovegood", 17);
+        Student student = new Student(1L, "Luna Lovegood", 17, null);
         when(studentRepository.findById(1L)).thenReturn(Optional.of(student));
 
         Student deletedStudent = studentService.delete(1L);
@@ -110,9 +111,9 @@ class StudentServiceImplTest {
     @Test
     void readAll_ExistingAge_ReturnMatchingStudents() {
         List<Student> students = new ArrayList<>();
-        students.add(new Student(1L, "Draco Malfoy", 17));
-        students.add(new Student(2L, "Cedric Diggory", 18));
-        students.add(new Student(3L, "Nymphadora Tonks", 19));
+        students.add(new Student(1L, "Draco Malfoy", 17, null));
+        students.add(new Student(2L, "Cedric Diggory", 18, null));
+        students.add(new Student(3L, "Nymphadora Tonks", 19, null));
 
         when(studentRepository.findByAge(17)).thenReturn(students);
 
@@ -129,5 +130,30 @@ class StudentServiceImplTest {
         List<Student> result = studentService.readAll(16);
 
         assertEquals(0, result.size());
+    }
+
+    @Test
+    public void findStudents_findStudentsByAge_returnStudents() {
+        List<Student> students = new ArrayList<>();
+        students.add(new Student(1L, "Harry", 15, null));
+        students.add(new Student(2L, "Germiona", 20, null));
+        students.add(new Student(3L, "Ron", 21, null));
+
+        when(studentRepository.findByAgeBetween(18, 22)).thenReturn(students);
+
+        List<Student> result = studentService.findStudentsByAge(18, 22);
+
+        assertEquals(3, result.size());
+    }
+
+    @Test
+    public void getStudentFaculty_getStudentsByFaculties_returnFaculty() {
+        long studentId = 1L;
+        Faculty faculty = new Faculty(1L, "Science", "Blue");
+
+        when(studentRepository.getFacultyByStudentId(studentId)).thenReturn(Optional.of(faculty));
+
+        Faculty result = studentService.getStudentFaculty(studentId);
+        assertEquals(faculty, result);
     }
 }

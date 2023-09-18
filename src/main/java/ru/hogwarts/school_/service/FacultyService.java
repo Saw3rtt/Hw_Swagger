@@ -17,6 +17,8 @@ public interface FacultyService {
 
     List<Faculty> readAll(String color);
 
+    List<Faculty> findByColor(String color);
+
     List<Faculty> findNameOrColorIgnoreCase(String name, String color);
 
     List<Student> getListStudentsByFaculty(long facultyId);

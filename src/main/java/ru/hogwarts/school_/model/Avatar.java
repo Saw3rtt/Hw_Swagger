@@ -25,6 +25,7 @@ public class Avatar {
         this.data = data;
         this.student = student;
     }
+
     public Avatar() {
     }
 

@@ -19,4 +19,13 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
     @Query("SELECT s.faculty FROM Student s WHERE s.id = :studentId")
     Optional<Faculty> getFacultyByStudentId(@Param("studentId") Long studentId);
 
+    @Query("SELECT count(student) from Student student")
+    Long findStudentCount();
+
+    @Query("SELECT avg(student) from Student student")
+    Integer findAverageAge();
+
+    @Query(value = "SELECT student from Student student order by s.id desc limit :size", nativeQuery = true)
+    List<Student> findLastStudent(int size);
+
 }

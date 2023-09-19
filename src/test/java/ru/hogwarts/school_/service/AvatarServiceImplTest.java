@@ -5,6 +5,9 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.mock.web.MockMultipartFile;
 import org.springframework.web.multipart.MultipartFile;
 import ru.hogwarts.school_.exception.AvatarNotFoundException;
@@ -14,6 +17,8 @@ import ru.hogwarts.school_.repository.AvatarRepository;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -28,7 +33,7 @@ public class AvatarServiceImplTest {
 
     Student student1 = new Student(1L, "Ron", 11, null);
     Student student2 = new Student(1L, "Ron", 11, null);
-    Student student3 = new Student(2L, "Ron", 15,null);
+    Student student3 = new Student(2L, "Ron", 15, null);
 
     @Test
     void uploadAvatar__avatarSavedToDbAndDirectory() throws IOException {
@@ -39,6 +44,7 @@ public class AvatarServiceImplTest {
         verify(avatarRepository, times(1)).save(any());
         assertTrue(FileUtils.canRead(new File(avatarDir + "/" + student1.getId() + "." + file.getContentType())));
     }
+
     @Test
     void readFromDb_avatarIsNotFound_returnNotFoundException() {
         when(avatarRepository.findById(1L)).thenReturn(Optional.empty());
@@ -47,6 +53,7 @@ public class AvatarServiceImplTest {
         assertEquals("Аватар не найден", ex.getMessage());
 
     }
+
     @Test
     void readFromDb_avatarIsFind_findAndReturnAvatar() {
         Avatar avatar = new Avatar();
@@ -59,5 +66,19 @@ public class AvatarServiceImplTest {
         Avatar result = underTest.readFromDb(1L);
         assertEquals(avatar, result);
 
+    }
+
+    @Test
+    void getPage__returnListOfAvatars() {
+        Avatar avatar = new Avatar();
+
+        int size = 1;
+
+        when(avatarRepository.findAll(PageRequest.of(0, size)))
+                .thenReturn(new PageImpl<>(List.of(avatar)));
+
+        List<Avatar> result = underTest.getPage(0, size);
+
+        assertEquals(List.of(avatar), result);
     }
 }

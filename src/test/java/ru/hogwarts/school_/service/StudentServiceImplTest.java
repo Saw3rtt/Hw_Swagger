@@ -11,6 +11,7 @@ import ru.hogwarts.school_.model.Student;
 import ru.hogwarts.school_.repository.StudentRepository;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
@@ -155,5 +156,42 @@ class StudentServiceImplTest {
 
         Faculty result = studentService.getStudentFaculty(studentId);
         assertEquals(faculty, result);
+    }
+
+    @Test
+    public void testFindStudentCount() {
+        when(studentRepository.findStudentCount()).thenReturn(10L);
+
+        Long result = studentService.findStudentCount();
+
+        assertEquals(10L, result);
+        verify(studentRepository, times(1)).findStudentCount();
+    }
+
+    @Test
+    public void testFindAverageAge() {
+        when(studentRepository.findAverageAge()).thenReturn(25);
+
+        Integer result = studentService.findAverageAge();
+
+        assertEquals(25, result);
+        verify(studentRepository, times(1)).findAverageAge();
+    }
+
+    @Test
+    public void testFindFiveLastStudent() {
+        List<Student> students = Arrays.asList(
+                new Student(1L, "John", 20, null),
+                new Student(2L, "Alice", 22, null),
+                new Student(3L, "Bob", 24, null),
+                new Student(4L, "Eve", 26, null),
+                new Student(5L, "Charlie", 28, null)
+        );
+        when(studentRepository.findLastStudent(5)).thenReturn(students);
+
+        List<Student> result = studentService.findFiveLastStudent();
+
+        assertEquals(5, result.size());
+        verify(studentRepository, times(1)).findLastStudent(5);
     }
 }

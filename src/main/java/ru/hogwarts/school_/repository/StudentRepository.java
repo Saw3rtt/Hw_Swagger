@@ -1,6 +1,7 @@
 package ru.hogwarts.school_.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.hogwarts.school_.model.Student;
 

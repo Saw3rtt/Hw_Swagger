@@ -81,7 +81,6 @@ public class FacultyControllerTest {
     void delete__status200AndDeleteToDb() throws Exception {
         OngoingStubbing<Optional<Faculty>> optionalOngoingStubbing = when(facultyRepository.findById(1L)).thenReturn(Optional.of(faculty));
         mockMvc.perform(delete("/faculty/" + faculty.getId())
-                        .content(objectMapper.writeValueAsString(faculty))
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(faculty.getId()));
@@ -92,7 +91,7 @@ public class FacultyControllerTest {
     void findColor__returnStatus200() throws Exception {
 
         when(facultyRepository.findByColor(faculty.getColor())).thenReturn(List.of(faculty));
-        mockMvc.perform(get("/faculty/color" + faculty.getColor()))
+        mockMvc.perform(get("/faculty/color/" + faculty.getColor()))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$[0].name").value(faculty.getName()))
                 .andExpect(jsonPath("$.[0].color").value(faculty.getColor()));

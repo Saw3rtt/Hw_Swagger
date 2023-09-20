@@ -62,6 +62,9 @@ public class StudentServiceImpl implements StudentService {
     @Override
     public Faculty getStudentFaculty(long studentId) {
         Optional<Faculty> faculty = studentRepository.getFacultyByStudentId(studentId);
+        if(faculty.isEmpty()){
+            throw new StudentException("Студент не найден!");
+        }
         return faculty.get();
     }
 }

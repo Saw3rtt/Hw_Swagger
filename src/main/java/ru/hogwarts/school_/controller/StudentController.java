@@ -1,7 +1,9 @@
 package ru.hogwarts.school_.controller;
 
 import org.springframework.web.bind.annotation.*;
+import ru.hogwarts.school_.model.Faculty;
 import ru.hogwarts.school_.model.Student;
+import ru.hogwarts.school_.repository.StudentRepository;
 import ru.hogwarts.school_.service.StudentService;
 
 import java.util.List;
@@ -35,8 +37,20 @@ public class StudentController {
         return studentService.delete(id);
 
     }
+
     @GetMapping("/age/{age}")
-    public List<Student> readAll(@PathVariable int age){
+    public List<Student> readAll(@PathVariable int age) {
         return studentService.readAll(age);
     }
+
+    @GetMapping("/findByAge")
+    public List<Student> findStudent(@RequestParam("max") int max, @RequestParam("min") int min) {
+        return studentService.findStudentsByAge(max, min);
+    }
+
+    @GetMapping("/faculty/{id}")
+    public Faculty getStudentFaculty(@PathVariable long id) {
+        return studentService.getStudentFaculty(id);
+    }
 }
+

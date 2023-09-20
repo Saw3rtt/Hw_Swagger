@@ -2,7 +2,11 @@ package ru.hogwarts.school_.controller;
 
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school_.model.Faculty;
+import ru.hogwarts.school_.model.Student;
+import ru.hogwarts.school_.repository.FacultyRepository;
 import ru.hogwarts.school_.service.FacultyService;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/faculty")
@@ -31,7 +35,16 @@ public class FacultyController {
     @DeleteMapping("/{id}")
     public Faculty delete(@PathVariable long id) {
         return facultyService.delete(id);
+    }
 
+    @GetMapping("/faculties")
+    public List<Faculty> findFacultyIgnoreCase(@RequestParam String name, @RequestParam String color) {
+        return facultyService.findNameOrColorIgnoreCase(name, color);
+    }
+
+    @GetMapping("/students/{id}")
+    public List<Student> getFacultyStudents(@PathVariable long id) {
+        return facultyService.getListStudentsByFaculty(id);
     }
 }
 

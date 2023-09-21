@@ -1,6 +1,7 @@
 package ru.hogwarts.school_.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import ru.hogwarts.school_.model.Student;
 
@@ -16,5 +17,14 @@ public interface StudentRepository extends JpaRepository<Student, Long> {
 
     //    @Query("SELECT s.faculty FROM Student s WHERE s.id = :studentId")
     Optional<Student> findStudentById(@Param("studentId") Long studentId);
+
+    @Query("SELECT count(student) from Student student")
+    Long findStudentCount();
+
+    @Query("SELECT avg(student.age) from Student student")
+    Integer findAverageAge();
+
+    @Query(value = "SELECT * from Student student order by student.id desc limit :size", nativeQuery = true)
+    List<Student> findLastStudent(int size);
 
 }

@@ -3,7 +3,6 @@ package ru.hogwarts.school_.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.mockito.stubbing.OngoingStubbing;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -11,10 +10,7 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.boot.test.mock.mockito.SpyBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
-import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 import ru.hogwarts.school_.model.Faculty;
-import ru.hogwarts.school_.model.Student;
 import ru.hogwarts.school_.repository.FacultyRepository;
 import ru.hogwarts.school_.repository.StudentRepository;
 import ru.hogwarts.school_.service.FacultyServiceImpl;
@@ -85,7 +81,6 @@ public class FacultyControllerTest {
                         .accept(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id").value(faculty.getId()));
     }
-
 
 
     @Test

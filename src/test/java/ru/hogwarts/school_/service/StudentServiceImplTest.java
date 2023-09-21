@@ -147,13 +147,23 @@ class StudentServiceImplTest {
     }
 
     @Test
-    public void getStudentFaculty_getStudentsByFaculties_returnFaculty() {
-        long studentId = 1L;
-        Faculty faculty = new Faculty(1L, "Science", "Blue");
+    void getStudentFaculty_StudentFound_ReturnsFaculty() {
+        Long studentId = 1L;
+        Student student = new Student(studentId, "Harry", 25,
+                new Faculty(1L, "Hufflepuff", "Blue"));
+        when(studentRepository.findStudentById(studentId)).thenReturn(Optional.of(student));
 
-        when(studentRepository.getFacultyByStudentId(studentId)).thenReturn(Optional.of(faculty));
+        Faculty faculty = studentService.getStudentFaculty(studentId);
+        assertEquals(student.getFaculty(), faculty);
 
-        Faculty result = studentService.getStudentFaculty(studentId);
-        assertEquals(faculty, result);
+    }
+
+    @Test
+    void getStudentFaculty_StudentNotFound_ThrowsException() {
+        Long studentId = 1L;
+        when(studentRepository.findStudentById(studentId)).thenReturn(Optional.empty());
+
+        assertThrows(StudentException.class, () -> studentService.getStudentFaculty(studentId));
     }
 }
+

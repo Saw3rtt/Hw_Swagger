@@ -45,6 +45,10 @@ public class FacultyController {
     public List<Student> getFacultyStudents(@PathVariable long id) {
         return facultyService.getListStudentsByFaculty(id);
     }
+    @GetMapping("/color/{color}")
+    public List<Faculty> findColor(@PathVariable String color) {
+        return facultyService.findByColor(color);
+    }
 }
 
 

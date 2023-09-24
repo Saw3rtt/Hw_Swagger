@@ -1,0 +1,5 @@
+databaseChangeLog:
+  - include:
+      file: db/changelog/faculty.sql
+  - include:
+      file: db/changelog/student.sql

@@ -1,10 +1,13 @@
 package ru.hogwarts.school_.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.bind.annotation.*;
 import ru.hogwarts.school_.model.Faculty;
 import ru.hogwarts.school_.model.Student;
 import ru.hogwarts.school_.repository.StudentRepository;
 import ru.hogwarts.school_.service.StudentService;
+import ru.hogwarts.school_.service.StudentServiceImpl;
 
 import java.util.List;
 

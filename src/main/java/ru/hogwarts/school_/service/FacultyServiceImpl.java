@@ -9,6 +9,7 @@ import ru.hogwarts.school_.model.Student;
 import ru.hogwarts.school_.repository.FacultyRepository;
 
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -89,6 +90,13 @@ public class FacultyServiceImpl implements FacultyService {
         List<Student> students = facultyRepository.getStudentsByFaculty(facultyId);
         logger.info("из метода getListStudentsByFaculty вернули студентов по факультету" + students);
         return students;
+    }
+    @Override
+    public String findByLongestName(){
+        return facultyRepository.findAll().stream()
+                .map(faculty -> faculty.getName())
+                .max(Comparator.comparingInt(name -> name.length()))
+                .orElseThrow(() -> new FacultyException("У нас нет факультетов в Бд"));
     }
 }
 

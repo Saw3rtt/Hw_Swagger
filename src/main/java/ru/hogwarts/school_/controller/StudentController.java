@@ -70,5 +70,15 @@ public class StudentController {
     public List<Student> findFiveLastStudents() {
         return studentService.findFiveLastStudent();
     }
+
+    @GetMapping("/name-with-a")
+    public List<String> findStudentNameThatStartWithA() {
+        return studentService.findNameWithFirstLetterIsA();
+    }
+
+    @GetMapping("/age-avg-with-stream")
+    public Double findAverageAgeByStream() {
+        return studentService.findAvgAgeByStream();
+    }
 }
 

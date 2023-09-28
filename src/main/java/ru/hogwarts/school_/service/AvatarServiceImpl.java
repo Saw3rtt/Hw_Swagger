@@ -1,5 +1,7 @@
 package ru.hogwarts.school_.service;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
@@ -18,7 +20,7 @@ import static java.nio.file.StandardOpenOption.CREATE_NEW;
 
 @Service
 public class AvatarServiceImpl implements AvatarService {
-
+    private final Logger logger = LoggerFactory.getLogger(AvatarServiceImpl.class);
     private final String avatarsDir;
     private final StudentService studentService;
     private final AvatarRepository avatarRepository;
@@ -31,6 +33,7 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public void uploadAvatar(Long studentId, MultipartFile avatarFile) throws IOException {
+        logger.info("был вызван метод uploadAvatar с данными" + studentId + " и " + avatarFile);
         Student student = studentService.read(studentId);
         Path filePath = Path.of(avatarsDir, student.getId() + "." + getExtensions(avatarFile.getOriginalFilename()));
         Files.createDirectories(filePath.getParent());
@@ -49,11 +52,15 @@ public class AvatarServiceImpl implements AvatarService {
         avatar.setFileSize(avatarFile.getSize());
         avatar.setMediaType(avatarFile.getContentType());
         avatar.setData(avatarFile.getBytes());
+        logger.info("аватар был успешно сохранен в Базу данных и папку");
         avatarRepository.save(avatar);
     }
 
     private String getExtensions(String fileName) {
-        return fileName.substring(fileName.lastIndexOf(".") + 1);
+        logger.info("был вызван метод getExtensions с данными" + fileName);
+        String substring = fileName.substring(fileName.lastIndexOf(".") + 1);
+        logger.info("из метода getExtensions вернули " + substring);
+        return substring;
     }
 
     @Override
@@ -65,7 +72,10 @@ public class AvatarServiceImpl implements AvatarService {
 
     @Override
     public List<Avatar> getPage(int pageNumber, int size) {
-        PageRequest page = PageRequest.of(pageNumber, size);
-        return avatarRepository.findAll(page).getContent();
+        logger.info("был вызван метод getPage с данными" + pageNumber + " и " + size);
+        PageRequest request = PageRequest.of(pageNumber, size);
+        List<Avatar> content = avatarRepository.findAll(request).getContent();
+        logger.info("из метода getPage вернули " + content);
+        return content;
     }
 }

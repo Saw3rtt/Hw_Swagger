@@ -108,7 +108,6 @@ public class StudentServiceImpl implements StudentService {
         return averageAge;
     }
 
-    @Override
     public List<Student> findFiveLastStudent() {
         logger.info("был вызван метод для findFiveLastStudents");
         List<Student> lastFiveStudent = studentRepository.findLastStudent(5);

@@ -1,14 +1,23 @@
 package ru.hogwarts.school_.controller;
 
+import liquibase.pro.packaged.G;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import ru.hogwarts.school_.service.ThreadService;
 
 import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/auxiliary")
 public class AuxiliaryController {
+
+
+    private ThreadService threadService;
+
+    public AuxiliaryController(ThreadService threadService) {
+        this.threadService = threadService;
+    }
 
     @GetMapping
     public Integer sumNumber() {
@@ -21,5 +30,9 @@ public class AuxiliaryController {
         System.out.println(finish - start);
 
         return sum;
+    }
+    @GetMapping("/thread")
+    public void startThreads(){
+        threadService.thread();
     }
 }

@@ -134,5 +134,16 @@ public class StudentServiceImpl implements StudentService {
                 .average()
                 .orElse(0);
     }
+
+    @Override
+    public List<Student> findAllStudents() {
+
+        logger.info("был вызван метод findAllStudents");
+
+        List<Student> studentList = studentRepository.findAll();
+
+        logger.info("метод findAllStudents вернул: " + studentList);
+        return studentList;
+    }
 }
 

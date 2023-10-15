@@ -31,4 +31,6 @@ public interface StudentService {
     List<String> findNameWithFirstLetterIsA();
 
     Double findAvgAgeByStream();
+
+    List<Student> findAllStudents();
 }

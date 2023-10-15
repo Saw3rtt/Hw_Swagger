@@ -50,6 +50,11 @@ public class FacultyController {
     public List<Faculty> findColor(@PathVariable String color) {
         return facultyService.findByColor(color);
     }
+
+    @GetMapping("/longest-name")
+    public String findLongestName() {
+        return facultyService.findByLongestName();
+    }
 }
 
 

@@ -1,6 +1,5 @@
 package ru.hogwarts.school_.controller;
 
-import liquibase.pro.packaged.G;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -12,7 +11,6 @@ import java.util.stream.Stream;
 @RequestMapping("/auxiliary")
 public class AuxiliaryController {
 
-
     private ThreadService threadService;
 
     public AuxiliaryController(ThreadService threadService) {
@@ -20,19 +18,33 @@ public class AuxiliaryController {
     }
 
     @GetMapping
-    public Integer sumNumber() {
+    public Integer streamExperiment() {
         long start = System.currentTimeMillis();
-        int sum = Stream.iterate(1, a -> a + 1)
+
+        int sum = Stream
+                .iterate(1, a -> a + 1)
                 .limit(1_000_000)
-                .parallel()
+                .parallel() // не ускоряет
                 .reduce(0, (a, b) -> a + b);
+
         long finish = System.currentTimeMillis();
         System.out.println(finish - start);
 
         return sum;
+
     }
-    @GetMapping("/thread")
-    public void startThreads(){
-        threadService.thread();
+
+    @GetMapping("/threadOne")
+    public void threadExperimentOne() {
+        threadService.threadOne();
+
     }
+
+    @GetMapping("/threadTwo")
+    public void threadExperimentTwo() {
+        threadService.threadTwo();
+
+    }
+
+
 }

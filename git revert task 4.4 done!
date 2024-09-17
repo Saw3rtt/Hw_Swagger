@@ -1,0 +1,141 @@
+[33mcommit 5ccaa02bb1b5690596099c3cfa0fb1f63e4a60aa[m[33m ([m[1;36mHEAD -> [m[1;32mhw_4.4[m[33m)[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Tue Sep 26 01:51:13 2023 +0300
+
+    task 4.4 done!
+
+[33mcommit 05ecc66db693d08017b6752b2ed97cba6b31c412[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Sun Sep 24 14:08:55 2023 +0300
+
+    task 4.3 done!
+
+[33mcommit f4aa4ed8b1037b96b66a1ab06810867bbeb9a1d1[m[33m ([m[1;31morigin/hw_4.2[m[33m, [m[1;32mhw_4.2[m[33m)[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Sat Sep 23 15:27:14 2023 +0300
+
+    task 4.2 done!
+
+[33mcommit dd04f05480d9899030ce2bab73e342686215e2b8[m[33m ([m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m, [m[1;32mmaster[m[33m)[m
+Merge: 6cffba4 5ebf389
+Author: Saw3rtt <134084404+Saw3rtt@users.noreply.github.com>
+Date:   Thu Sep 21 16:53:49 2023 +0300
+
+    Merge pull request #6 from Saw3rtt/Hw_4.1
+    
+    Hw 4.1
+
+[33mcommit 6cffba4dadcff11a9b013a9ea7071b8c16194bbb[m
+Merge: d5c1fe6 bdc226b
+Author: Saw3rtt <134084404+Saw3rtt@users.noreply.github.com>
+Date:   Thu Sep 21 16:53:38 2023 +0300
+
+    Merge pull request #5 from Saw3rtt/Hw_3.6
+    
+    Hw 3.6
+
+[33mcommit 5ebf3890a7987d9b0ec55222a1df83c107d867c4[m[33m ([m[1;31morigin/Hw_4.1[m[33m)[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Wed Sep 20 14:51:01 2023 +0300
+
+    task 4.1 fix!
+
+[33mcommit 423c67c4de65aa21ee724bd397c29c0e733eb53a[m
+Merge: 4b1e58b bdc226b
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Wed Sep 20 14:38:25 2023 +0300
+
+    Merge branch 'Hw_3.6' into Hw_4.1
+
+[33mcommit d5c1fe69d53d20f06500d2bfba72370152d258e6[m
+Merge: 14a5d51 45a6098
+Author: Saw3rtt <134084404+Saw3rtt@users.noreply.github.com>
+Date:   Wed Sep 20 14:36:43 2023 +0300
+
+    Merge pull request #4 from Saw3rtt/Hw_3.5
+    
+    Hw 3.5
+
+[33mcommit 14a5d512deae64fd499eb7652dbfcd3e63204310[m
+Merge: a905cc7 1b6af32
+Author: Saw3rtt <134084404+Saw3rtt@users.noreply.github.com>
+Date:   Wed Sep 20 14:36:23 2023 +0300
+
+    Merge pull request #3 from Saw3rtt/Hw_SQL
+    
+    task 3.4 done!
+
+[33mcommit 4b1e58bdd21cb4c1f49372a096f75f93db593d5a[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Wed Sep 20 14:22:05 2023 +0300
+
+    task 4.1 fix!
+
+[33mcommit bdc226bc73ac981ac7cc7f7ffb3fe7476ada0db4[m[33m ([m[1;31morigin/Hw_3.6[m[33m)[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Wed Sep 20 14:05:05 2023 +0300
+
+    task 3.6 fix!
+
+[33mcommit f385a1cca79e9e8e1d8a8ff433434b3fa90829c8[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Tue Sep 19 17:08:12 2023 +0300
+
+    task 4.1 done!
+
+[33mcommit e5cf5f70ba87934895f3496a53d42d409ddfda72[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Mon Sep 18 23:49:47 2023 +0300
+
+    task 3.6 done!
+
+[33mcommit 45a609886e4f60f93e9eab05ccedac890f28a587[m[33m ([m[1;31morigin/Hw_3.5[m[33m)[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Mon Sep 18 18:44:50 2023 +0300
+
+    task 3.5 done!
+
+[33mcommit 1b6af32f415d62ea5e6e2692780733eb51f02afa[m[33m ([m[1;31morigin/Hw_SQL[m[33m)[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Sat Sep 16 18:26:29 2023 +0300
+
+    task 3.4 fix!
+
+[33mcommit 1976640d81c43d6b2f8793483365e9742fb2662a[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Fri Sep 15 14:19:01 2023 +0300
+
+    task 3.4 done!
+
+[33mcommit a905cc7fc4ad2194ae2a8e507d03624693c5fc15[m
+Merge: 8e3123a dbc54ff
+Author: Saw3rtt <134084404+Saw3rtt@users.noreply.github.com>
+Date:   Thu Sep 14 17:14:38 2023 +0300
+
+    Merge pull request #2 from Saw3rtt/Hw_Db
+    
+    task done!
+
+[33mcommit dbc54ff4d754376267c612449787791892d84918[m[33m ([m[1;31morigin/Hw_Db[m[33m)[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Wed Sep 13 13:02:05 2023 +0300
+
+    task 3.3 done!
+
+[33mcommit f5c18e6f45a55408822f01aa44f94773a5d1c2bd[m[33m ([m[1;31morigin/Hw_Swagger[m[33m)[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Sat Sep 9 00:05:07 2023 +0300
+
+    task done!
+
+[33mcommit 2b0b1fc00d0a2dbe97390f97ee9725fe1c432e33[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Sat Sep 9 00:03:51 2023 +0300
+
+    add gitignore!
+
+[33mcommit 8e3123a9930afa118e534a6082cb7f532bb4e792[m
+Author: Saw3rtt <sawertpra@gmail.com>
+Date:   Sat Sep 9 00:02:36 2023 +0300
+
+    add gitignore!
